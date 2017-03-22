@@ -30,6 +30,7 @@ namespace Zabawki
                 typeCombo.Items.Add(new Item(type.ToString(), (int)type));
                 typeComboAdd.Items.Add(new Item(type.ToString(), (int)type));
             }
+            typeCombo.Items.Add(new Item("", -1));
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -44,34 +45,42 @@ namespace Zabawki
 
         private void button3_Click(object sender, EventArgs e)
         {
-            ((IAccelerate)selected).Accelerate((int)numericUpDown1.Value);
+            ((IDive)selected).Dive((int)numericUpDown1.Value);
+            DescribeSelectedObject();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             ((IRise)selected).Rise((int)numericUpDown1.Value);
+            DescribeSelectedObject();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             ((IAccelerate)selected).Accelerate((int)numericUpDown1.Value);
+            DescribeSelectedObject();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(nameCombo.SelectedValue != null && typeCombo.Text !=null)
+            if(typeCombo.Text !=null)
             {
-                selected = objDic[(int)nameCombo.SelectedValue];
+                selected = objDic[(nameCombo.SelectedItem as Item).Value];
             }
             if(selected != null)
             {
-                StringBuilder sb = new StringBuilder();
-                int t = ExamineType(selected);
-                sb.Append("Type: " + ((Types)t).ToString() + "\n");
-                sb.Append(getObjInfoAndBlockButtons(selected));
-                selectedDesc.Text = sb.ToString();
+                DescribeSelectedObject();
 
             }
+        }
+
+        private void DescribeSelectedObject()
+        {
+            StringBuilder sb = new StringBuilder();
+            int t = ExamineType(selected);
+            sb.Append("Type: " + ((Types)t).ToString() + "\n");
+            sb.Append(getObjInfoAndBlockButtons(selected));
+            selectedDesc.Text = sb.ToString();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -82,7 +91,6 @@ namespace Zabawki
                 objDic.Add(id, GetInstance(text));
                 text = text + id;
                 nameCombo.Items.Add(new Item(text, id));
-                selectedDesc.Text = typeComboAdd.SelectedIndex.ToString();
                 id++;
             }
 
@@ -167,19 +175,33 @@ namespace Zabawki
 
         private void nameCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            typeCombo.SelectedValue = ExamineType(objDic[(int)nameCombo.SelectedValue]);
+            typeCombo.SelectedIndex = ExamineType(objDic[(nameCombo.SelectedItem as Item).Value]);
         }
 
         private void typeCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            populateNameCombo();
-            foreach(Item it in nameCombo.Items)
+            if (typeCombo.SelectedText.Equals(""))
             {
-                if(ExamineType(objDic[it.Value]) != (int)typeCombo.SelectedValue)
+                populateNameCombo();
+            }
+            else
+            {
+                nameCombo.Items.Clear();
+                foreach (Item it in nameCombo.Items)
                 {
-                    nameCombo.Items.Remove(it);
+                    if (ExamineType(objDic[it.Value]) == (typeCombo.SelectedItem as Item).Value)
+                    {
+                        nameCombo.Items.Add(it);
+                    }
                 }
             }
+            
+    
+        }
+
+        private void selectedDesc_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

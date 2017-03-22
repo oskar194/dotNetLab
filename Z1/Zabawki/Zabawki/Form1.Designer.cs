@@ -33,6 +33,7 @@
             this.selectButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.accButton = new System.Windows.Forms.Button();
             this.riseButton = new System.Windows.Forms.Button();
             this.diveButton = new System.Windows.Forms.Button();
@@ -40,11 +41,10 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.addButton = new System.Windows.Forms.Button();
             this.typeComboAdd = new System.Windows.Forms.ComboBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // nameCombo
@@ -102,6 +102,13 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Setting parameters";
             // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(292, 15);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown1.TabIndex = 4;
+            // 
             // accButton
             // 
             this.accButton.Location = new System.Drawing.Point(418, 73);
@@ -137,9 +144,10 @@
             this.selectedDesc.AutoSize = true;
             this.selectedDesc.Location = new System.Drawing.Point(9, 20);
             this.selectedDesc.Name = "selectedDesc";
-            this.selectedDesc.Size = new System.Drawing.Size(35, 13);
+            this.selectedDesc.Size = new System.Drawing.Size(94, 13);
             this.selectedDesc.TabIndex = 0;
-            this.selectedDesc.Text = "label2";
+            this.selectedDesc.Text = "Object Description";
+            this.selectedDesc.Click += new System.EventHandler(this.selectedDesc_Click);
             // 
             // groupBox3
             // 
@@ -170,13 +178,6 @@
             this.typeComboAdd.Size = new System.Drawing.Size(406, 21);
             this.typeComboAdd.TabIndex = 2;
             // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(292, 15);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 4;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -190,8 +191,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
