@@ -9,26 +9,38 @@ namespace Tablica
     class Table
     {
         int[] tab;
-        int index;
-        int size;
         int last;
 
-        void Add(int x)
+        public Table(int size)
         {
-            if(last + 1 > size)
+            this.tab = new int[size];
+            this.last = 0;
+        }
+
+        public void Add(int x)
+        {
+            if(last == tab.Length-1)
             {
-                tab = new int[size * 2];
-                size *= 2;
+                int[] tab2 = new int[tab.Length];
+                tab.CopyTo(tab2, 0);
+                tab = new int[tab.Length * 2];
+                tab2.CopyTo(tab, 0);
+               // tab[last] = x;
+               // last++;
             }
-            tab[last + 1] = x;
-            last++;
+            else
+            {
+
+                tab[last] = x;
+                last++;
+            }
         }
 
         public int this[int index]
         {
             get
             {
-                if(index > size)
+                if(index >= tab.Length)
                 {
                     throw new Exception("Index out of bounds");
                 }else
@@ -38,10 +50,12 @@ namespace Tablica
             }
             set
             {
-                if(index > size)
-                {
-                    size = index;
-                    tab = new int[size];
+                if(index >= tab.Length)
+                { 
+                    int[] tab2 = new int[tab.Length];
+                    tab.CopyTo(tab2, 0);
+                    tab = new int[index + 1];
+                    tab2.CopyTo(tab, 0);
                 }
                 tab[index] = value;
                 last = index;
