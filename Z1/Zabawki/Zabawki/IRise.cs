@@ -8,6 +8,7 @@ namespace Zabawki
 {
     interface IRise
     {
+        int GetRise();
         void Rise(int change);
     }
 }

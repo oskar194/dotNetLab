@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zabawki
+namespace Tablica
 {
-    interface IAccelerate
+    class Program
     {
-        int GetAcceleration();
-        void Accelerate(int change);
+        static void Main(string[] args)
+        {
+        }
     }
 }

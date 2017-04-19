@@ -47,5 +47,15 @@ namespace Zabawki
         {
             acceleration += change;
         }
+
+        public int GetAcceleration()
+        {
+            return acceleration;
+        }
+
+        public int GetDive()
+        {
+            return depth;
+        }
     }
 }

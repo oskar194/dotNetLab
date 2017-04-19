@@ -25,6 +25,9 @@ namespace Zabawki
             riseButton.Enabled = false;
             accButton.Enabled = false;
             diveButton.Enabled = false;
+            typeCombo.DropDownStyle = ComboBoxStyle.DropDownList;
+            typeComboAdd.DropDownStyle = ComboBoxStyle.DropDownList;
+            nameCombo.DropDownStyle = ComboBoxStyle.DropDownList;
             foreach (var type in Enum.GetValues(typeof(Types)))
             {
                 typeCombo.Items.Add(new Item(type.ToString(), (int)type));
@@ -110,37 +113,27 @@ namespace Zabawki
 
         string getObjInfoAndBlockButtons(Object obj)
         {
+            string desc = "";
+            diveButton.Enabled = false;
+            riseButton.Enabled = false;
+            accButton.Enabled = false;
             if (obj is IDive)
             {
-                Submarine s = (Submarine)obj;
-                riseButton.Enabled = false;
-                accButton.Enabled = true;
                 diveButton.Enabled = true;
-                return "Depth: " + s.Depth.ToString() + "\nAcceleration: " + s.Acceleration.ToString()+"\n";
+                desc += "Depth: " + ((IDive)obj).GetDive().ToString() + "\n";
             }
-            else if (obj is IRise)
+            if (obj is IRise)
             {
-                Plane p = (Plane)obj;
                 riseButton.Enabled = true;
-                accButton.Enabled = true;
-                diveButton.Enabled = false;
-                return "Level: " + p.Level.ToString() + "\nAcceleration: " + p.Acceleration.ToString()+"\n";
+                desc += "Level: " + ((IRise)obj).GetRise().ToString() + "\n";
             }
-            else if (obj is IAccelerate)
+            if (obj is IAccelerate)
             {
-                Car c = (Car)obj;
-                riseButton.Enabled = false;
                 accButton.Enabled = true;
-                diveButton.Enabled = false;
-                return "Acceleration: " + c.Acceleration.ToString()+"\n";
+                desc += "Acceleration: " + ((IAccelerate)obj).GetAcceleration().ToString() + "\n";
             }
-            else
-            {
-                riseButton.Enabled = false;
-                accButton.Enabled = false;
-                diveButton.Enabled = false;
-                return "No fields\n";
-            }
+            return desc;
+            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

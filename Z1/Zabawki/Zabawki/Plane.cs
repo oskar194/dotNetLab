@@ -46,5 +46,15 @@ namespace Zabawki
         {
             level += change;
         }
+
+        public int GetRise()
+        {
+            return level;
+        }
+
+        public int GetAcceleration()
+        {
+            return acceleration;
+        }
     }
 }

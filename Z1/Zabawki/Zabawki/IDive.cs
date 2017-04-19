@@ -8,6 +8,7 @@ namespace Zabawki
 {
     interface IDive
     {
+        int GetDive();
         void Dive(int change);
     }
 }
