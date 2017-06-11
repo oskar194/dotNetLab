@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -43,10 +44,14 @@ namespace TablicaMultithread {
 			foreach (Thread t in tList) {
 				t.Join();
 			}
+			StreamWriter file = new StreamWriter("plik.txt");
 			for (int i = 0; i < tab.Length; i++) {
 				Console.WriteLine(tab[i]);
+				file.WriteLine(tab[i]);
 			}
 			Console.WriteLine("Table length is : " + tab.Length);
+
+			file.Close();
 			Console.ReadKey();
 		}
 	}
