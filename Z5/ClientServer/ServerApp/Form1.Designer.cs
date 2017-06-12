@@ -42,6 +42,7 @@
 			this.startButton.TabIndex = 0;
 			this.startButton.Text = "Start/Stop";
 			this.startButton.UseVisualStyleBackColor = true;
+			this.startButton.Click += new System.EventHandler(this.startButton_Click);
 			// 
 			// folderBrowseButton
 			// 
@@ -51,6 +52,7 @@
 			this.folderBrowseButton.TabIndex = 1;
 			this.folderBrowseButton.Text = "Browse";
 			this.folderBrowseButton.UseVisualStyleBackColor = true;
+			this.folderBrowseButton.Click += new System.EventHandler(this.folderBrowseButton_Click);
 			// 
 			// textBox1
 			// 
@@ -81,7 +83,6 @@
 			this.label1.Size = new System.Drawing.Size(17, 13);
 			this.label1.TabIndex = 5;
 			this.label1.Text = "IP";
-			this.label1.Click += new System.EventHandler(this.label1_Click);
 			// 
 			// label2
 			// 

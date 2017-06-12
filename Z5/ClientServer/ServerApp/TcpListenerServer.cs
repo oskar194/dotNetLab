@@ -12,19 +12,31 @@ using System.Windows.Forms;
 
 namespace ServerApp {
 	class TcpListenerServer {
-		TcpListener server = null;
+		private TcpListener server = null;
+		private bool isRunning = false;
+		public bool IsRunning {
+			get {
+				return isRunning;
+			}
+		}
 		List<Thread> threadList = new List<Thread>();
 		public void StartListening(IPAddress ip, int port, String path) {
 			try {
 				server = new TcpListener(ip, port);
 				server.Start();
-				while (true) {
+				isRunning = true;
+				while (isRunning) {
 					TcpClient client = server.AcceptTcpClient();
 					threadList.Add( new Thread(() => { processClient(client, path); }));
 					threadList.Last().Start();
 				}
 			}catch(SocketException se) {
-				MessageBox.Show("SERVER: Connection problem!");
+				if (se.SocketErrorCode == SocketError.Interrupted) {
+				}
+				else {
+					MessageBox.Show("SERVER: Connection problem!");
+				}
+				return;
 			}catch(Exception e) {
 				MessageBox.Show("SERVER: Unknown problem!");
 			}finally {
@@ -33,6 +45,8 @@ namespace ServerApp {
 		}
 
 		private void processClient(TcpClient client, string path) {
+			if (!isRunning)
+				return;
 			int bytesRead = 0;
 			int allRead = 0;
 			string[] filesInDirectory;
@@ -62,8 +76,9 @@ namespace ServerApp {
 		public void stopServer() {
 			foreach(Thread t in threadList) {
 				t.Join();
-				server.Stop();
 			}
+			isRunning = false;
+			server.Stop();
 		}
 	}
 }
