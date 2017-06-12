@@ -12,15 +12,19 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ServerApp {
-	public partial class Form1 : Form {
+	public partial class Server : Form {
 		TcpListenerServer server = new TcpListenerServer();
 		int port;
 		string path;
 		IPAddress ip;
 		Thread t;
-		public Form1() {
+		public Server() {
 			InitializeComponent();
 			statusLabel.Text = "Disconnected";
+			textBox1.Text = "127.0.0.1";
+			textBox2.Text = "8080";
+			textBox3.Text = "C:\\Users\\Admin\\Desktop\\smietnikZProgramu";
+
 		}
 
 		private void folderBrowseButton_Click(object sender, EventArgs e) {

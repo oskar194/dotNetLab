@@ -1,5 +1,5 @@
 ﻿namespace ServerApp {
-	partial class Form1 {
+	partial class Server {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -126,7 +126,7 @@
 			this.Controls.Add(this.folderBrowseButton);
 			this.Controls.Add(this.startButton);
 			this.Name = "Form1";
-			this.Text = "Form1";
+			this.Text = "Server";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
