@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -53,27 +54,39 @@ namespace ClientServer {
 			Socket handler = listenerSocket.EndAccept(asyncResult);
 			DataObject dataObject = new DataObject();
 			dataObject.clientSocket = handler;
+			Console.WriteLine("Accepted");
 			handler.BeginReceive(dataObject.buffer, 0, DataObject.bufferSize, 0, new AsyncCallback(ReadCallback), dataObject);
 		}
 		public static void ReadCallback(IAsyncResult asyncResult) {
+			Console.WriteLine("Reading");
 			String content = String.Empty;
-			DataObject dataObject = new DataObject();
+			String name = String.Empty;
+			DataObject dataObject = (DataObject)asyncResult.AsyncState;
 			Socket handler = dataObject.clientSocket;
 			int bytesRead = handler.EndReceive(asyncResult);
-			if(bytesRead > 0) {
+			if(bytesRead == 0) {
+				if(content.IndexOf("<EOF>") > -1) {
+					name = content.Substring(content.IndexOf("<EOF>") + "<EOF>".Length);
+					content = content.Remove(content.IndexOf("<EOF>"));
+					Console.WriteLine(name);
+					FileStream file = new FileStream("C:\\Users\\Admin\\Desktop\\"+ name, FileMode.OpenOrCreate);
+					file.Write(ASCIIEncoding.ASCII.GetBytes(content), 0, ASCIIEncoding.ASCII.GetBytes(content).Length);
+				}
+				Console.WriteLine("Read {0} bytes from client", content.Length);
+				Console.WriteLine("Content: {0}", content);
+				Send(handler, "SUCCESS");
+			}
+			if (bytesRead > 0) {
 				dataObject.sb.Append(ASCIIEncoding.ASCII.GetString(dataObject.buffer, 0, bytesRead));
 				content = dataObject.sb.ToString();
-				if(content.IndexOf("<EOF>") > -1) {
-					Console.WriteLine("Read {0} bytes from client", content.Length);
-					Console.WriteLine("Content: {0}", content);
-					Send(handler, "SUCCESS");
-				}else {
-					handler.BeginReceive(dataObject.buffer, 0, DataObject.bufferSize, 0,new AsyncCallback(ReadCallback),dataObject);
-				}
+				Console.WriteLine("Read {0} bytes from client", content.Length);
+				//Console.WriteLine("Content: {0}", content);
+				handler.BeginReceive(dataObject.buffer, 0, DataObject.bufferSize, 0, new AsyncCallback(ReadCallback), dataObject);
 			}
 		}
 
 		private static void Send(Socket handler, String data) {
+			Console.WriteLine("Sending response");
 			byte[] byteData = ASCIIEncoding.ASCII.GetBytes(data);
 			handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
 		}
@@ -82,7 +95,7 @@ namespace ClientServer {
 			try {
 				Socket handler = (Socket)asyncResult.AsyncState;
 				int bytesSend = handler.EndSend(asyncResult);
-				Console.WriteLine("Message send. Closing connection.");
+				Console.WriteLine("Message sent. Closing connection.");
 				handler.Shutdown(SocketShutdown.Both);
 				handler.Close();
 			}catch(Exception e) {
@@ -103,6 +116,7 @@ namespace ClientServer {
 				if (arguments[0].Equals("xd")) {
 					ip = IPAddress.Parse("127.0.0.1");
 					port = 8080;
+					Console.WriteLine("Server started at 127.0.0.1:8080");
 				} else {
 					try {
 						ip = IPAddress.Parse(arguments[0]);
