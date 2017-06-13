@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCommunicationInterface", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApp", "ClientApp\ClientApp.csproj", "{B041B865-18C3-4AF2-B026-CE701408E5FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApp — kopia", "ClientApp\ClientApp — kopia.csproj", "{568482CD-6FB3-4602-BB45-7420E1D3DDAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B041B865-18C3-4AF2-B026-CE701408E5FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B041B865-18C3-4AF2-B026-CE701408E5FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B041B865-18C3-4AF2-B026-CE701408E5FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{568482CD-6FB3-4602-BB45-7420E1D3DDAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{568482CD-6FB3-4602-BB45-7420E1D3DDAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{568482CD-6FB3-4602-BB45-7420E1D3DDAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{568482CD-6FB3-4602-BB45-7420E1D3DDAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
